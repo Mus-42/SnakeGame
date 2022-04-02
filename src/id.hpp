@@ -18,6 +18,7 @@ struct id_t {
         if(id) f(id);//destruct ID
         id = o.id;
         o.id = 0;
+        return *this;
     }
 
     ~id_t() {
