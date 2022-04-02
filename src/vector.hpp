@@ -1,0 +1,67 @@
+#pragma once
+#ifndef VECTOR_INCLUDE_
+#define VECTOR_INCLUDE_
+
+template<typename T>
+struct vec2_t {
+    constexpr vec2_t(T v = T(0)) : x(v), y(v) {}
+    constexpr vec2_t(T X, T Y) : x(X), y(Y) {}
+    constexpr vec2_t(const vec2_t&) = default;
+    constexpr vec2_t& operator=(const vec2_t&) = default;
+    ~vec2_t() = default;
+
+    template<typename T2>
+    constexpr vec2_t(const vec2_t<T2>& v2) : x(static_cast<T2>(v2.x)), y(static_cast<T2>(v2.y)) {}
+
+    T x, y;
+};
+template<typename T>
+constexpr bool operator==(const vec2_t<T>& a, const vec2_t<T>& b) {
+    return a.x == b.x && a.y == b.y;
+}
+template<typename T>
+constexpr bool operator!=(const vec2_t<T>& a, const vec2_t<T>& b) {
+    return a.x != b.x || a.y != b.y;
+}
+template<typename T>
+constexpr vec2_t<T> operator+(const vec2_t<T>& a, const vec2_t<T>& b) {
+    return {a.x + b.x, a.y + b.y};
+}
+template<typename T>
+constexpr vec2_t<T> operator-(const vec2_t<T>& a, const vec2_t<T>& b) {
+    return {a.x - b.x, a.y - b.y};
+}
+template<typename T>
+constexpr vec2_t<T> operator*(const vec2_t<T>& a, const vec2_t<T>& b) {
+    return {a.x + b.x, a.y + b.y};
+}
+template<typename T>
+constexpr vec2_t<T> operator/(const vec2_t<T>& a, const vec2_t<T>& b) {
+    return {a.x * b.x, a.y / b.y};
+}
+template<typename T>
+constexpr vec2_t<T>& operator+=(vec2_t<T>& a, const vec2_t<T>& b) {
+    a = a+b
+    return a;
+}
+template<typename T>
+constexpr vec2_t<T>& operator-=(vec2_t<T>& a, const vec2_t<T>& b) {
+    a = a-b
+    return a;
+}
+template<typename T>
+constexpr vec2_t<T>& operator*=(vec2_t<T>& a, const vec2_t<T>& b) {
+    a = a*b
+    return a;
+}
+template<typename T>
+constexpr vec2_t<T>& operator/=(vec2_t<T>& a, const vec2_t<T>& b) {
+    a = a/b
+    return a;
+}
+
+using vec2 = vec2_t<float>;
+using ivec2 = vec2_t<int>;
+using uvec2 = vec2_t<unsigned>;
+
+#endif//VECTOR_INCLUDE_
