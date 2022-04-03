@@ -1,6 +1,6 @@
 #pragma once
-#ifndef CAMERA_FRANSFORM_INCLUDE_
-#define CAMERA_FRANSFORM_INCLUDE_
+#ifndef CAMERA_TRANSFORM_INCLUDE_
+#define CAMERA_TRANSFORM_INCLUDE_
 #include "vector.hpp"
 //create 3x3 transform matrix world coords to GL screen coords (from -1 to 1)
 inline float* create_2d_camera_teransform(ivec2 window_size, vec2 camera_pos, vec2 scale) {
@@ -18,4 +18,4 @@ inline float* create_2d_camera_teransform(ivec2 window_size, vec2 camera_pos, ve
     mat[8] = 1.f;
     return mat;
 }
-#endif//CAMERA_FRANSFORM_INCLUDE_
+#endif//CAMERA_TRANSFORM_INCLUDE_
