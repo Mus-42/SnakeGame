@@ -29,8 +29,15 @@ inline std::vector<vertex> build_shape(const rect& r, color fill_color, const ir
 }
 
 inline std::vector<vertex> build_shape(const circ& c, color fill_color, const irect& texture_rect = irect()) {
-    std::vector<vertex> ret(0);//TODO calc size
-    //TODO add impl
+    constexpr float pi = 3.14159265359f;
+    float l = c.radius * 2.f * pi;
+    size_t seg_count = std::min(size_t(l), size_t(10));
+    std::vector<vertex> ret(seg_count * 3, {{}, {}, fill_color});
+    float step = 2*pi / (float)(ret.size());
+    for(size_t i = 0; i < seg_count; i++) {//for each segment
+
+    }
+
     return ret;
 }
 
