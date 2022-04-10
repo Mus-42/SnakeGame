@@ -30,7 +30,7 @@ constexpr const char* display_shd_fragment_code = R"shd(
     out vec4 outcol;
 
     void main() {
-        outcol = texture(tex, uv) * vec4(col);
+        outcol = texture(tex, uv) * col;
     }
 )shd";
 

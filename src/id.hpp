@@ -22,7 +22,7 @@ struct id_t {
     }
 
     ~id_t() {
-        f(id);//destruct ID
+        if(id) f(id);//destruct ID
     }
 
     operator unsigned() const {
