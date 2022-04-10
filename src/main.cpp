@@ -7,32 +7,8 @@
 #include "shader.hpp"
 #include "process_gl_errors.hpp"
 #include "2d_camera_transform.hpp"
+#include "display_shader.hpp"
 #include "vertex.hpp"
-
-//sample shader code
-constexpr const char* vertex_code = R"shd(
-#version 330 core 
-layout(location = 0) in vec2 v_pos;
-layout(location = 1) in vec4 v_col;
-
-uniform mat3 camera_transform;
-
-out vec4 col;
-void main() {
-	col = v_col;
-    vec3 pos = camera_transform * vec3(v_pos, 1.);
-	gl_Position = vec4(pos.xy, 0.5, 1.);
-}
-)shd";
-constexpr const char* fragment_code = R"shd(
-#version 330 core 
-in vec4 col;
-out vec4 outcol;
-
-void main() {
-    outcol = vec4(col);
-}
-)shd";
 
 int main() {
     ivec2 window_size = {1080, 720};
@@ -46,7 +22,7 @@ int main() {
 
     gladLoadGL((GLADloadfunc)glfwGetProcAddress);
 
-    shader shd = shader(vertex_code, fragment_code);
+    shader display_shd = shader(display_shd_vertex_code, display_shd_fragment_code);
 
     std::vector<vertex> vert;
     {
@@ -79,13 +55,13 @@ int main() {
 
     while (!glfwWindowShouldClose(w)) {
         glfwGetWindowSize(w, &window_size.x, &window_size.y);
-        glUniformMatrix3fv(shd.get_uniform_loc("camera_transform"), 1, GL_FALSE, create_2d_camera_teransform(window_size));
+        glUniformMatrix3fv(display_shd.get_uniform_loc("camera_transform"), 1, GL_FALSE, create_2d_camera_teransform(window_size));
 
         glViewport(0, 0, window_size.x, window_size.y);
         glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
-        glUseProgram(shd.id);
+        glUseProgram(display_shd.id);
         glBindVertexArray(vao);
         glDrawArrays(GL_TRIANGLES, 0, (unsigned)vert.size());
         glBindVertexArray(0);
