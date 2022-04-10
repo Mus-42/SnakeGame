@@ -3,6 +3,7 @@
 #define VERTEX_INCLUDE_
 
 #include <vector>//std::vector
+#include <cmath>//sin, cos ...
 
 #include "vector.hpp"
 #include "color.hpp"
@@ -31,13 +32,14 @@ inline std::vector<vertex> build_shape(const rect& r, color fill_color, const ir
 inline std::vector<vertex> build_shape(const circ& c, color fill_color, const irect& texture_rect = irect()) {
     constexpr float pi = 3.14159265359f;
     float l = c.radius * 2.f * pi;
-    size_t seg_count = std::min(size_t(l), size_t(10));
+    size_t seg_count = std::max(size_t(l), size_t(10));
     std::vector<vertex> ret(seg_count * 3, {{}, {}, fill_color});
-    float step = 2*pi / (float)(ret.size());
+    float step = 2*pi / float(seg_count);
     for(size_t i = 0; i < seg_count; i++) {//for each segment
-
+        ret[i * 3 + 0].pos = c.pos;
+        ret[i * 3 + 1].pos = c.pos + vec2(c.radius) * vec2(sin(i * step), cos(i * step));
+        ret[i * 3 + 2].pos = c.pos + vec2(c.radius) * vec2(sin((i+1) * step), cos((i+1) * step));
     }
-
     return ret;
 }
 

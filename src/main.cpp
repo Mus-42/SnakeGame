@@ -4,9 +4,9 @@
 #include <GLFW/glfw3.h>
 #include <glad/gl.h>
 
-#include "vector.hpp"
 #include "shader.hpp"
-#include "color.hpp"
+#include "process_gl_errors.hpp"
+#include "vertex.hpp"
 
 //sample shader code
 constexpr const char* vertex_code = R"shd(
@@ -16,7 +16,8 @@ layout(location = 1) in vec4 v_col;
 out vec4 col;
 void main() {
 	col = v_col;
-	gl_Position = vec4(v_pos, 0., 1.);
+    vec2 pos = v_pos;
+	gl_Position = vec4(pos, 0.5, 1.);
 }
 )shd";
 constexpr const char* fragment_code = R"shd(
@@ -24,7 +25,7 @@ constexpr const char* fragment_code = R"shd(
 in vec4 col;
 out vec4 outcol;
 void main() {
-    outcol = col;
+    outcol = vec4(col);
 }
 )shd";
 
@@ -42,40 +43,47 @@ int main() {
 
     shader shd = shader(vertex_code, fragment_code);
 
-    unsigned vao, vbo;
+    std::vector<vertex> vert;
+    {
+        auto circle_vert = build_shape(circ(0.3f, {0.5f, 0.2f}), col_blue);
+        auto rect_vert = build_shape(rect({-0.2f, -0.2f}, {0.2f, 0.2f}), col_green);
+        vert.reserve(circle_vert.size() + rect_vert.size());
+        vert.insert(vert.end(), circle_vert.begin(), circle_vert.end());
+        vert.insert(vert.end(), rect_vert.begin(), rect_vert.end());
+    }
+    
 
-    struct vert {
-        vec2 pos;
-        color col;
-    } buf[] = {//example OpenGL triangle data
-        {{-0.5f, -0.2f}, {255, 0, 0}},  
-        {{0.0f, 0.6f}, {0, 255, 0}},  
-        {{0.5f, -0.2f}, {0, 0, 255}}  
-    };
+    unsigned vao, vbo;
 
     //create buffers and send buffer data
     glGenVertexArrays(1, &vao);
     glGenBuffers(1, &vbo);
     glBindVertexArray(vao);
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(buf), buf, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, vert.size() * sizeof(vertex), vert.data(), GL_STATIC_DRAW);
 
     //set vertex atribbutes
     glEnableVertexAttribArray(0);//pos
-    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(vert), (void*)offsetof(vert, pos));
+    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(vertex), (void*)offsetof(vertex, pos));
     glEnableVertexAttribArray(1);//col
-    glVertexAttribPointer(1, 3, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(vert), (void*)offsetof(vert, col));
+    glVertexAttribPointer(1, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(vertex), (void*)offsetof(vertex, col));
+    glBindVertexArray(0);
+
+    glDisable(GL_CULL_FACE);
 
     while (!glfwWindowShouldClose(w)) {
         glfwGetWindowSize(w, &window_size.x, &window_size.y);
 
         glViewport(0, 0, window_size.x, window_size.y);
-        glClearColor(0.f, 0.f, 0.f, 1.0f);
+        glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
         glUseProgram(shd.id);
         glBindVertexArray(vao);
-        glDrawArrays(GL_TRIANGLES, 0, 3);
+        glDrawArrays(GL_TRIANGLES, 0, (unsigned)vert.size());
+        glBindVertexArray(0);
+
+        process_gl_errors();
 
         glfwSwapBuffers(w);
         glfwPollEvents();
