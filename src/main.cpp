@@ -26,13 +26,9 @@ int main() {
     shader display_shd = shader(display_shd_vertex_code, display_shd_fragment_code);
 
     std::vector<vertex> vert;
-    {
-        auto circle_vert = build_shape(circ(50.f, {150.f, 50.f}), col_blue);
-        auto rect_vert = build_shape(rect({-20.f, -20.f}, {20.0f, 20.f}), col_green);
-        vert.reserve(circle_vert.size() + rect_vert.size());
-        vert.insert(vert.end(), circle_vert.begin(), circle_vert.end());
-        vert.insert(vert.end(), rect_vert.begin(), rect_vert.end());
-    }
+    
+    build_shape(std::back_inserter(vert), circ(50.f, {150.f, 50.f}), col_blue);
+    build_shape(std::back_inserter(vert), rect({-20.f, -20.f}, {20.0f, 20.f}), col_green);
     
 
     unsigned vao, vbo;
