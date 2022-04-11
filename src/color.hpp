@@ -23,9 +23,18 @@ bool operator!=(const color& a, const color& b) {
     return !(a == b);
 }
 
+
+constexpr color col_white = { 255, 255, 255 };
+constexpr color col_black = { 0, 0, 0 };
+
+constexpr color col_transparent = { 0, 0, 0, 0 };
+
 constexpr color col_red = { 255, 0, 0 };
 constexpr color col_green = { 0, 255, 0 };
 constexpr color col_blue = { 0, 0, 255 };
-//TODO add other
+
+constexpr color col_yellow = { 255, 255, 0 };
+constexpr color col_magenta = { 255, 0, 255 };
+constexpr color col_cyan = { 0, 255, 255 };
 
 #endif//COLOR_INCLUDE_

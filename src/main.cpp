@@ -8,7 +8,7 @@
 #include "process_gl_errors.hpp"
 #include "2d_camera_transform.hpp"
 #include "display_shader.hpp"
-#include "vertex.hpp"
+#include "snake.hpp"
 #include "texture.hpp"
 
 int main() {
@@ -27,8 +27,8 @@ int main() {
 
     std::vector<vertex> vert;
     
-    build_shape(std::back_inserter(vert), circ(50.f, {150.f, 50.f}), col_blue);
-    build_shape(std::back_inserter(vert), rect({-20.f, -20.f}, {20.0f, 20.f}), col_green);
+    snake s;
+    s.draw(vert);
     
 
     unsigned vao, vbo;
