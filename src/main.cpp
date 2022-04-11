@@ -27,8 +27,10 @@ int main() {
 
     std::vector<vertex> vert;
     
+    constexpr size_t max_vert_size = size_t(3e5);
+    //vert.reserve(max_vert_size);
+
     snake s;
-    s.draw(vert);
     
 
     unsigned vao, vbo;
@@ -38,7 +40,8 @@ int main() {
     glGenBuffers(1, &vbo);
     glBindVertexArray(vao);
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
-    glBufferData(GL_ARRAY_BUFFER, vert.size() * sizeof(vertex), vert.data(), GL_STATIC_DRAW);
+    //glBufferData(GL_ARRAY_BUFFER, vert.size() * sizeof(vertex), vert.data(), GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, max_vert_size * sizeof(vertex), nullptr, GL_DYNAMIC_DRAW);
 
     //set vertex atribbutes
     glEnableVertexAttribArray(0);//pos
@@ -57,10 +60,25 @@ int main() {
     glUniform1i(display_shd.get_uniform_loc("tex"), 1);//GL_TEXTURE0 -> 0
     glActiveTexture(GL_TEXTURE1);
     glBindTexture(GL_TEXTURE_2D, default_texture.id.id);
+
     process_gl_errors("tex creations");
 
+    double prev_frame_time = glfwGetTime();
     while (!glfwWindowShouldClose(w)) {
         glfwGetWindowSize(w, &window_size.x, &window_size.y);
+        double t = glfwGetTime();
+        float dt = float(t - prev_frame_time);
+        prev_frame_time = t;
+
+        s.update(dt);
+
+        vert.clear();
+
+        s.draw(vert);
+        build_shape(std::back_inserter(vert), seg{{0., 0.}, {10., 0.}}, col_cyan);
+
+        glBindBuffer(GL_ARRAY_BUFFER, vbo);
+        glBufferSubData(GL_ARRAY_BUFFER, 0, std::min(max_vert_size, vert.size()) * sizeof(vertex), vert.data());
 
         glUseProgram(display_shd.id);
         glUniformMatrix3fv(display_shd.get_uniform_loc("camera_transform"), 1, GL_FALSE, create_2d_camera_teransform(window_size));

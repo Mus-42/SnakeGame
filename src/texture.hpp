@@ -41,7 +41,6 @@ public:
     }
 
     static void unload_texture_by_id(unsigned id) {
-        std::cout << "unloaded texture " << id << std::endl;
         glDeleteTextures(1, &id);
     }
     id_t<unload_texture_by_id> id;

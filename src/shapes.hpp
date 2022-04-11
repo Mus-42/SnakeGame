@@ -39,6 +39,17 @@ public:
             && b.y <= p.y && p.y <= a.y;
     }
 };
+template<typename T>
+class segment {
+public:
+    segment() : a(0), b(0) {}
+    segment(vec2_t<T> A, vec2_t<T> B) : a(A), b(B) {}
+    vec2_t<T> a, b;
+
+    //TODO add distanse to line function impl
+};
+
+using seg = segment<float>;
 
 using circ = circle<float>;
 

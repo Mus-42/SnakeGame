@@ -1,0 +1,8 @@
+payer class -> child of snake
+player control
+food class
+camera -> attached to player head
+enemy class -> child of snake
+
+texture update (from pixel array/image) function
+snake, food texture?
