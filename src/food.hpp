@@ -10,7 +10,8 @@ public:
 
     void update(float dt) {
         //TODO add impl
-        //cur_pos = origin + ...;
+        m_time += dt;
+        cur_pos = origin + angle_vector(m_time * 100.f);
     }
 
     void draw(std::vector<vertex>& vec) {
@@ -18,6 +19,7 @@ public:
     }
 
     float saturation;
+    float m_time = 0.f; 
     vec2 cur_pos;
     vec2 origin;//food rotate around origin
 };

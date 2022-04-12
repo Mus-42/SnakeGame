@@ -57,10 +57,11 @@ constexpr const char* background_shd_fragment_code = R"shd(
     out vec4 outcol;
 
     void main() {
-        //TODO transform pix_pos to texture pos;
         vec2 size = vec2(textureSize(bacground_tex, 0));
         outcol = texture(bacground_tex, fract((floor(pix_pos) + 0.5) / size));
     }
 )shd";
+
+//TODO add light shader
 
 #endif

@@ -92,4 +92,6 @@ T angle_of_vector(const vec2_t<T>& v) {
     return (T)std::atan2(n.x, n.y);
 }
 
+//TODO add min, max, clamp, round ... functions for vector? (same as GLSL)
+
 #endif//VECTOR_INCLUDE_

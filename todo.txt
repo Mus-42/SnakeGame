@@ -5,6 +5,7 @@ camera -> attached to player head
 enemy class -> child of snake (pathfinder -> ai?)
 
 world class -> contains all snakes, food etc.
+world control food respawn, collision, ai calculating
 
 texture update (from pixel array/image) function
 snake, food texture?
