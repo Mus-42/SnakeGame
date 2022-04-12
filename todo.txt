@@ -2,7 +2,12 @@ payer class -> child of snake
 player control
 food class
 camera -> attached to player head
-enemy class -> child of snake
+enemy class -> child of snake (pathfinder -> ai?)
+
+world class -> contains all snakes, food etc.
 
 texture update (from pixel array/image) function
 snake, food texture?
+
+add objects such as walls or boxes?
+add normal resorce folder (copy to bin dir using cmake?)

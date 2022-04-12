@@ -43,22 +43,22 @@ constexpr vec2_t<T> operator/(const vec2_t<T>& a, const vec2_t<T>& b) {
 }
 template<typename T>
 constexpr vec2_t<T>& operator+=(vec2_t<T>& a, const vec2_t<T>& b) {
-    a = a+b
+    a = a+b;
     return a;
 }
 template<typename T>
 constexpr vec2_t<T>& operator-=(vec2_t<T>& a, const vec2_t<T>& b) {
-    a = a-b
+    a = a-b;
     return a;
 }
 template<typename T>
 constexpr vec2_t<T>& operator*=(vec2_t<T>& a, const vec2_t<T>& b) {
-    a = a*b
+    a = a*b;
     return a;
 }
 template<typename T>
 constexpr vec2_t<T>& operator/=(vec2_t<T>& a, const vec2_t<T>& b) {
-    a = a/b
+    a = a/b;
     return a;
 }
 
