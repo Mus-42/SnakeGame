@@ -1,6 +1,6 @@
 payer class -> child of snake
 player control
-food class
+camera class
 camera -> attached to player head
 enemy class -> child of snake (pathfinder -> ai?)
 

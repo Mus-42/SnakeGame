@@ -40,9 +40,8 @@ public:
         ddir1 = clamp_ang(ddir1);
         ddir2 = clamp_ang(ddir2);
         float ddir = std::abs(ddir1) < std::abs(ddir2) ? ddir1 : ddir2;
-        float dir_speed = 1.5f;
+        float dir_speed = 2.5f;
         h.dir -= dir_speed * dt * std::copysign(1.f, ddir);
-        //if(std::isfinite(h.dir)) 
         h.pos += vec2(dt * speed) * angle_vector(h.dir);
         for(size_t sz = m_segments.size(), i = 1; i < sz; i++) {
             auto& s = m_segments[i];
@@ -52,7 +51,7 @@ public:
 
             float cur_l = length(l.pos - s.pos);
             float dl = std::max(cur_l - dist, 0.f);
-
+            //TODO fixit
             s.pos += vec2(std::clamp(dt * speed, 0.f, dl)) * angle_vector(s.dir);
         }
 

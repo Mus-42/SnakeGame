@@ -9,6 +9,7 @@
 #include "2d_camera_transform.hpp"
 #include "shaders_src.hpp"
 #include "snake.hpp"
+#include "world.hpp"
 #include "texture.hpp"
 
 //TODO move all global variables in single class?
@@ -47,6 +48,7 @@ int main() {
     shader background_shd = shader(background_shd_vertex_code, background_shd_fragment_code);//background
     
     snake test_snake;
+    world test_world;
 
     texture background_texture = texture::load_from_image(image::load_from_file("bacground.png"));//TODO add normal resorce folder
 
@@ -79,10 +81,13 @@ int main() {
         
 
         test_snake.update(dt);
+        test_world.update(dt);
+        
         camera_pos = test_snake.get_head_pos();//TODO add lerp
 
 
         test_snake.draw(vert);
+        test_world.draw(vert);
         //build_shape(std::back_inserter(vert), seg{{0., 0.}, {10., 0.}}, col_cyan);
 
         glBindBuffer(GL_ARRAY_BUFFER, vert_vbo);
