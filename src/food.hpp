@@ -10,8 +10,9 @@ public:
 
     void update(float dt) {
         //TODO add impl
-        m_time += dt;
-        cur_pos = origin + angle_vector(m_time / 100.f);
+        m_time += dt / 5.f;
+        float radius = 50.f;
+        cur_pos = origin + vec2(radius)*angle_vector(m_time);
     }
 
     void draw(std::vector<vertex>& vec) {
