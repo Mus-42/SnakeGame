@@ -49,6 +49,7 @@ int main() {
     
     snake test_snake;
     world test_world;
+    test_world.m_snakes.push_back(&test_snake);//TODO add member func to it?
 
     texture background_texture = texture::load_from_image(image::load_from_file("bacground.png"));//TODO add normal resorce folder
 
@@ -74,19 +75,19 @@ int main() {
         world_mouse_pos = skreen_mouse_pos + camera_pos;
         vert.clear();
 
-        auto p = test_snake.get_head_pos();
-        build_shape(std::back_inserter(vert), seg{world_mouse_pos, world_mouse_pos + vec2(14.f)*normalize(world_mouse_pos - p)}, col_magenta);
+        //auto p = test_snake.get_head_pos();
+        //build_shape(std::back_inserter(vert), seg{world_mouse_pos, world_mouse_pos + vec2(14.f)*normalize(world_mouse_pos - p)}, col_magenta);
 
         test_snake.set_direction(world_mouse_pos);
         
 
-        test_snake.update(dt);
+        //test_snake.update(dt);
         test_world.update(dt);
         
         camera_pos = test_snake.get_head_pos();//TODO add lerp
 
 
-        test_snake.draw(vert);
+        //test_snake.draw(vert);
         test_world.draw(vert);
         //build_shape(std::back_inserter(vert), seg{{0., 0.}, {10., 0.}}, col_cyan);
 

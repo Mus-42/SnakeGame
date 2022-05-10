@@ -21,13 +21,17 @@ public:
             //f.col
             m_food.push_back(f);
         }
+
+        for(auto s : m_snakes) s->update(dt);
     }
 
     void draw(std::vector<vertex>& vec) {
+        for(auto s : m_snakes) s->draw(vec);
         for(auto& f : m_food) f.draw(vec);
     }
 
     std::vector<food> m_food;//replase vector with other struct. quad tree or other similar data struct;
+    std::vector<snake*> m_snakes;
 };
 
 #endif//WORLD_INCLUDE_
